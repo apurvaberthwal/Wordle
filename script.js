@@ -28,6 +28,7 @@ const offsetFromDate=new Date(2023,11,22)
 const msOffset= Date.now()-offsetFromDate
 const dayOffset=msOffset/1000/60/60/24
 var temp = "";
+let currentGuessCount=0;
 
 
 startInteraction()
@@ -111,6 +112,7 @@ function submitGuess(){
   }
   stopInteraction()
   activeTiles.forEach((...params)=>flipTile(...params,guess))
+  currentGuessCount++;
   temp = "";
 
 }
@@ -197,7 +199,18 @@ function checkWinLose(guess,tiles){
     stopInteraction()
     return
   }
+  
+  if (currentGuessCount >= 6) {
+    wordle(tiles)
+  }
 }
+
+function wordle(tiles) {
+  stopInteraction() 
+  showAlert("The answer was: " + targetWord, 5000) 
+}
+
+
 function danceTiles(tiles){
   tiles.forEach((tile,index)=>{
     setTimeout(()=>{
